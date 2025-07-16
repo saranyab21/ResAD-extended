@@ -92,6 +92,7 @@ python main_extended_multi_shot.py \
 ```
 This will generate the following folder structure:
 
+```
 checkpoints/
 ├── mvtec_to_visa_2shot/
 │   ├── mvtec_to_visa_2shot_epoch59_metrics.csv
@@ -100,6 +101,7 @@ checkpoints/
 ├── mvtec_to_visa_4shot/
 │   └── ...
 ...
+```
 
 ### Extension 1: Shot Sensitivity Analysis
 This script visualizes how AUROC changes with the number of reference shots.
