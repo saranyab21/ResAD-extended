@@ -10,7 +10,7 @@ Intuitive illustration of class-generalizable anomaly detection and conceptual i
 
 
 ## Download Few-Shot Reference Samples
-The few-shot reference normal samples are already downloaded and can be found in `./data` directory. It can be found in [Data](https://huggingface.co/datasets/xcyao00/resad-data/tree/main).
+The few-shot reference normal samples are already downloaded and can be found in `./data` directory. It is downloaded from [Data](https://huggingface.co/datasets/xcyao00/resad-data/tree/main).
 
 ## Download Datasets
 Please download MVTecAD dataset from [MVTecAD dataset](https://www.mvtec.com/de/unternehmen/forschung/datasets/mvtec-ad/), VisA dataset from [VisA dataset](https://amazon-visual-anomaly.s3.us-west-2.amazonaws.com/VisA_20220922.tar), BTAD dataset from [BTAD dataset](http://avires.dimi.uniud.it/papers/btad/btad.zip), and MVTec3D dataset from [MVTec3D dataset](https://www.mvtec.com/company/research/datasets/mvtec-3d-ad), MPDD dataset from [MPDD dataset](https://github.com/stepanje/MPDD), MVTecLOCO dataset from [MVTecLOCO dataset](https://www.mvtec.com/company/research/datasets/mvtec-loco), BraTS dataset from [BraTS dataset](https://www.kaggle.com/datasets/dschettler8854/brats-2021-task1).
