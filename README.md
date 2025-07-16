@@ -1,6 +1,4 @@
-## ResAD: A Simple Framework for Class Generalizable Anomaly Detection (NeurIPS Spotlight, 2024)
-
-PyTorch implementation for NeurIPS 2024 spotlight paper, ResAD: A Simple Framework for Class Generalizable Anomaly Detection ([https://arxiv.org/abs/2410.20047](https://arxiv.org/abs/2410.20047)).
+## Extending 'ResAD: A Simple Framework for Class Generalizable Anomaly Detection (NeurIPS Spotlight, 2024)' for Hauptseminar: Advanced Machine Learning for Anomaly Detection
 
 <img src="./figures/framework.jpg" width="800">
 
@@ -12,7 +10,7 @@ Intuitive illustration of class-generalizable anomaly detection and conceptual i
 
 
 ## Download Few-Shot Reference Samples
-First, You need to download the few-shot reference normal samples. Please download the few-shot normal reference samples from [Data](https://huggingface.co/datasets/xcyao00/resad-data/tree/main) and put the data in the `./data` directory.
+The few-shot reference normal samples are already downloaded and can be found in `./data` directory. It can be found in [Data](https://huggingface.co/datasets/xcyao00/resad-data/tree/main).
 
 ## Download Datasets
 Please download MVTecAD dataset from [MVTecAD dataset](https://www.mvtec.com/de/unternehmen/forschung/datasets/mvtec-ad/), VisA dataset from [VisA dataset](https://amazon-visual-anomaly.s3.us-west-2.amazonaws.com/VisA_20220922.tar), BTAD dataset from [BTAD dataset](http://avires.dimi.uniud.it/papers/btad/btad.zip), and MVTec3D dataset from [MVTec3D dataset](https://www.mvtec.com/company/research/datasets/mvtec-3d-ad), MPDD dataset from [MPDD dataset](https://github.com/stepanje/MPDD), MVTecLOCO dataset from [MVTecLOCO dataset](https://www.mvtec.com/company/research/datasets/mvtec-loco), BraTS dataset from [BraTS dataset](https://www.kaggle.com/datasets/dschettler8854/brats-2021-task1).
@@ -50,23 +48,6 @@ python main.py --setting mvtec_to_visa --train_dataset_dir /path/to/your/dataset
 ```bash
 python main.py --setting mvtec_to_mvtec3d --train_dataset_dir /path/to/your/dataset --test_dataset_dir /path/to/your/dataset  --test_ref_feature_dir ./ref_features/w50/mvtec3d_4shot --num_ref_shot 4 --device cuda:0
 ```
-Please note that the ``--num_ref_shot`` should be less than or equal to 4, as we only extract reference features with 4-shot reference samples.
-
-Normally, you can obtain the following results (under 4-shot setting; please run sufficiently, about 60 epochs):
-| Dataset | Image AUC | Pixel AUC | 
-|:------------:|:--------:|:----------:|
-| MVTecAD | 91.0 | 96.0 |
-| VisA | 89.4 | 96.8 | 
-| BTAD | 94.7 | 97.2 |
-| MVTec3D | 72.0 | 97.7 | 
-
-We also provide a script ``main_all.py`` for testing 2, 4, and 8 shot settings simultaneously. You need to extract reference features with 8-shot samples in the ./data/8shot directory. The command is:
-```bash
-# Extract reference features
-python extract_ref_features.py --dataset mvtec --few_shot_dir ./data/8shot/mvtec --save_dir ./ref_features/w50/mvtec_8shot 
-# Training and evaluating
-python main_all.py --setting visa_to_mvtec --train_dataset_dir /path/to/your/dataset --test_dataset_dir /path/to/your/dataset  --test_ref_feature_dir ./ref_features/w50/mvtec_8shot --device cuda:0
-```
 
 
 ### Download ImageBind Checkpoint
@@ -77,9 +58,73 @@ For Imagebind as feature extractor, you can download the pre-trained ImageBind m
 python main_ib.py --setting visa_to_mvtec --train_dataset_dir /path/to/your/dataset --test_dataset_dir /path/to/your/dataset  --test_ref_feature_dir ./ref_features/ib/mvtec_4shot --num_ref_shot 4 --device cuda:0
 ```
 
-## Citation
+---
 
-If you find this repository useful, please consider citing our work:
+## Multi-Shot Evaluation with ResAD Extensions 
+
+The extensions for this advanced seminar include **multi-shot training**, **shot sensitivity analysis**, and **class-wise failure analysis** built on top of the official ResAD framework.
+
+---
+
+### Multi-Shot Training & Evaluation
+
+We extend `main.py` into a new script `main_extended_multi_shot.py` that automatically evaluates **2, 4, 6, and 8-shot** settings in a single run.
+
+Before running this, make sure you've extracted 8-shot reference features:
+
+```bash
+python extract_ref_features.py \
+  --dataset visa \
+  --few_shot_dir ./data/8shot/visa \
+  --save_dir ./ref_features/w50/visa_8shot
+```
+Run multi-shot training + evaluation:
+
+```bash
+python main_extended_multi_shot.py \
+  --setting mvtec_to_visa \
+  --train_dataset_dir /path/to/mvtec \
+  --test_dataset_dir /path/to/visa \
+  --test_ref_feature_dir ./ref_features/w50/visa_8shot \
+  --checkpoint_path ./checkpoints/ \
+  --epochs 60 \
+  --device cuda:0
+```
+This will generate the following folder structure:
+
+checkpoints/
+├── mvtec_to_visa_2shot/
+│   ├── mvtec_to_visa_2shot_epoch59_metrics.csv
+│   ├── mvtec_to_visa_2shot_epoch59_pixel_auroc.png
+│   ├── mvtec_to_visa_2shot_latest.pth
+├── mvtec_to_visa_4shot/
+│   └── ...
+...
+
+### Extension 1: Shot Sensitivity Analysis
+This script visualizes how AUROC changes with the number of reference shots.
+1. Loads metrics from the checkpoints/ folders
+2. Splits MVTecAD and VisA results
+3. Produces a plot: shots_vs_auroc.png
+   
+### Extension 2: Class-wise Failure Case Analysis
+This script highlights the top-3 lowest-performing classes based on pixel-level AUROC.
+1. Loads 4-shot CSV
+2. Sorts classes
+3. Highlight 3 worst AUROC bars in red
+
+### Summary of Custom Extensions
+
+| Feature                     | Script                         | Description                             |
+| --------------------------- | ------------------------------ | --------------------------------------- |
+| Multi-shot training/testing | `main_extended_multi_shot.py`  | Trains & evaluates 2/4/6/8-shot         |
+| AUROC vs Shot Plot          | `shot_sensitivity_analysis.py` | Shows gains with more reference samples |
+| Class-wise Failure Bars     | `classwise_failure.py`         | Highlights weak-performing classes      |
+
+Feel free to fork or contribute to the extended version here: https://github.com/saranyab21/ResAD-extended
+
+## Reference:
+
 ```
 @article{ResAD,
       title={ResAD: A Simple Framework for Class Generalizable Anomaly Detection}, 
@@ -90,7 +135,5 @@ If you find this repository useful, please consider citing our work:
       primaryClass={cs.CV}
 }
 ```
-
-If you are interested in our work, you can also follow our previous works: [BGAD (CVPR2023)](https://github.com/xcyao00/BGAD), [PMAD (AAAI2023)](https://github.com/xcyao00/PMAD), [FOD (ICCV2023)](https://github.com/xcyao00/FOD), [HGAD (ECCV2024)](https://github.com/xcyao00/HGAD). Or, you can follow our github page [xcyao00](https://github.com/xcyao00).
 
 
