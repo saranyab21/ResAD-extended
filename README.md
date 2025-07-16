@@ -10,13 +10,6 @@ Intuitive illustration of class-generalizable anomaly detection and conceptual i
 
 ---
 
-**Update: The code in this repository is not exactly the same with the method in the NeurIPS conference paper. We further improved the method and open-source the improved code, which can achieve better performance and is also more robust. For more details, please see our journal version paper (due to some review reasons, the journal version paper is not currently open for access).**
-
-## Installation
-Install all packages (the same version with ours) by the following command:
-```
-$ pip3 install -r requirements.txt
-```
 
 ## Download Few-Shot Reference Samples
 First, You need to download the few-shot reference normal samples. Please download the few-shot normal reference samples from [Data](https://huggingface.co/datasets/xcyao00/resad-data/tree/main) and put the data in the `./data` directory.
