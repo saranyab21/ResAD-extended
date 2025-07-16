@@ -1,4 +1,4 @@
-## Extending 'ResAD: A Simple Framework for Class Generalizable Anomaly Detection (NeurIPS Spotlight, 2024)' for Hauptseminar: Advanced Machine Learning for Anomaly Detection
+## Extending 'ResAD: A Simple Framework for Class Generalizable Anomaly Detection (NeurIPS Spotlight, 2024)' for Hauptseminar: Advanced Machine Learning for Anomaly Detection - Summer'25
 
 <img src="./figures/framework.jpg" width="800">
 
