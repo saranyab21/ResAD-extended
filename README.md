@@ -105,12 +105,18 @@ checkpoints/
 
 ### Extension 1: Shot Sensitivity Analysis
 This script visualizes how AUROC changes with the number of reference shots.
+```bash
+python shot_sensitivity_analysis.py
+```
 1. Loads metrics from the checkpoints/ folders
 2. Splits MVTecAD and VisA results
 3. Produces a plot: shots_vs_auroc.png
    
 ### Extension 2: Class-wise Failure Case Analysis
 This script highlights the top-3 lowest-performing classes based on pixel-level AUROC.
+```bash
+python classwise_failure.py
+```
 1. Loads 4-shot CSV
 2. Sorts classes
 3. Highlight 3 worst AUROC bars in red
