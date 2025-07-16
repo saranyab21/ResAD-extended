@@ -1,5 +1,5 @@
 """
-This script is used for test 2, 4, and 8 shot settings simultaneously. 
+This script is used for test 2, 4, 6, and 8 shot settings simultaneously. 
 You need to extract reference features with 8-shot samples in the ./data/8shot directory.
 """
 import os
@@ -175,7 +175,7 @@ def main(args):
         print(f"Epoch[{epoch}/{args.epochs}]: train_loss: {train_loss_total / total_num}")
         
         if (epoch + 1) % args.eval_freq == 0:
-            for num_shot in [2, 4, 8]:
+            for num_shot in [2, 4, 6, 8]:
                 s1_res, s2_res, s_res = [], [], []
                 test_ref_features = load_mc_reference_features(args.test_ref_feature_dir, CLASSES['unseen'], args.device, num_shot)
                 for class_name in CLASSES['unseen']:
