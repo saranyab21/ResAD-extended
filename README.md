@@ -115,7 +115,7 @@ This script highlights the top-3 lowest-performing classes based on pixel-level 
 2. Sorts classes
 3. Highlight 3 worst AUROC bars in red
 
-### Summary of Custom Extensions
+### Summary of Extensions
 
 | Feature                     | Script                         | Description                             |
 | --------------------------- | ------------------------------ | --------------------------------------- |
