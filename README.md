@@ -68,7 +68,7 @@ The extensions for this advanced seminar include **multi-shot training**, **shot
 
 ### Multi-Shot Training & Evaluation
 
-We extend `main.py` into a new script `main_extended_multi_shot.py` that automatically evaluates **2, 4, 6, and 8-shot** settings in a single run.
+The `main.py` is extended into a new script `main_extended_multi_shot.py` that automatically evaluates **2, 4, 6, and 8-shot** settings in a single run.
 
 Before running this, make sure you've extracted 8-shot reference features:
 
