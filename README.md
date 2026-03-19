@@ -143,5 +143,8 @@ Feel free to fork or contribute to the extended version here: https://github.com
       primaryClass={cs.CV}
 }
 ```
+## Author
+
+**Saranya Bhattacharjee (aj81owid)**
 
 
